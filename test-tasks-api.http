@@ -1,0 +1,80 @@
+# GET all tasks	200 with tasks array
+GET http://localhost:8000/tasks
+Accept: application/json
+
+###
+
+# GET a single task	200 with task object
+GET http://localhost:8000/tasks/1
+Accept: application/json
+
+###
+
+# GET a task that doesn't exist	404
+GET http://localhost:8000/tasks/1000
+Accept: text/plain
+
+###
+
+# POST a new task (valid data)	201 with created task
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+  "title": "Complete Assignment 1",
+  "description": "Extend the REST API with tasks",
+  "user_id": 1,
+  "completed": false
+}
+
+###
+
+# POST a task with missing title	400
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+  "description": "Extend the REST API with tasks",
+  "user_id": 1,
+  "completed": false
+}
+
+###
+
+# POST a task with invalid user_id	400
+POST http://localhost:8000/tasks
+Content-Type: application/json
+
+{
+  "title": "Complete Assignment 1",
+  "description": "Extend the REST API with tasks",
+  "user_id": 50,
+  "completed": false
+}
+
+###
+
+# PUT to update a task	200 with updated task
+PUT http://localhost:8000/tasks/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "id": 1, 
+  "title": "Learn REST updated", 
+  "description": "Review REST principles", 
+  "user_id": 1, 
+  "completed": false
+}
+
+###
+
+# DELETE a task	204
+DELETE http://localhost:8000/tasks/1
+Accept: text/plain
+
+###
+
+# GET tasks for a specific user	200 with user's tasks
+GET http://localhost:8000/users/1/tasks
+Accept: application/json
