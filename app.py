@@ -175,6 +175,23 @@ def delete_user(user_id):
     users = [user for user in users if user['id'] != user_id]
     return '', 204  # 204 is the HTTP status code for 'No Content', indicating the deletion was successful
 
+# Add a User-Tasks Endpoint
+# Add an endpoint to retrieve all tasks assigned to a specific user:
+@app.route('/users/<int:user_id>/tasks', methods=['GET'])
+def get_user_tasks(user_id):
+    user_exists = False
+    tasks_list = []
+    for user in users:
+        if user['id'] == user_id:
+            user_exists = True
+            break
+    if not user_exists:
+        abort(404)
+    for task in tasks:
+        if task['user_id'] == user_id:
+            tasks_list.append(task)
+    return jsonify(tasks_list), 200
+
 # Entry point for running the Flask app
 # The app will run on host 0.0.0.0 (accessible on all network interfaces) and port 8000.
 # Debug mode is disabled (set to False).
