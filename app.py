@@ -21,6 +21,11 @@ users = [
     {"id": 2, "name": "Bob", "age": 30},
 ]
 
+tasks = [
+    {"id": 1, "title": "Learn REST", "description": "Study REST principles", "user_id": 1, "completed": True},
+    {"id": 2, "title": "Build API", "description": "Complete the assignment", "user_id": 2, "completed": False},
+]
+
 # Define route to handle requests to the root URL ('/')
 @app.route('/')
 def index():
@@ -31,6 +36,78 @@ def index():
 @app.route('/health', methods=['GET'])
 def health_check():
     return jsonify({"status": "healthy"}), 200  # Return HTTP status 200 OK
+
+# Task resource
+# Retrieve all tasks
+@app.route('/tasks', methods=['GET'])
+def get_tasks():
+    return jsonify(tasks), 200
+
+# Retrieve a single task by ID
+@app.route('/tasks/<int:id>', methods=['GET'])
+def get_task(id):
+    task = None
+    for task in tasks:
+        if task['id'] == id:
+            return jsonify(task), 200
+    abort(404)
+
+# Create a new task
+@app.route('/tasks', methods=['POST'])
+def create_task():
+    data = request.get_json()
+    user_exists = False
+    if not data or 'title' not in data or 'user_id' not in data:
+        abort(400)
+    for user in users:
+        if data['user_id'] == user['id']:
+            user_exists = True
+            break
+    if not user_exists:
+        abort(400)
+    if tasks:
+        new_id = tasks[-1]['id'] + 1
+    else:
+        new_id = 1
+    new_task = {
+        "id": new_id,
+        "title": data['title'],
+        "description": data.get('description', ""),
+        "user_id": data['user_id'],
+        "completed": data.get('completed', False)
+    }
+    tasks.append(new_task)
+    return jsonify(new_task), 201
+
+# Update an existing task
+@app.route('/tasks/<int:id>', methods=['PUT'])
+def update_task(id):
+    target_task = None
+    data = request.get_json()
+    for task in tasks:
+        if task['id'] == id:
+            target_task = task
+            break
+    if target_task is None:
+        abort(404)
+    if data is None:
+        abort(400)
+    target_task['title'] = data.get('title', target_task['title'])
+    target_task['description'] = data.get('description', target_task['description'])
+    target_task['completed'] = data.get('completed', target_task['completed'])
+
+    return jsonify(target_task), 200
+
+# Delete a task
+@app.route('/tasks/<int:id>', methods=['DELETE'])
+def delete_task(id):
+    global tasks
+    updated_tasks = []
+    for task in tasks:
+        if task['id'] != id:
+            updated_tasks.append(task)
+    tasks = updated_tasks
+    return '', 204
 
 # Route to retrieve all users (GET request)
 # When the client sends a GET request to /users, this function will return a JSON list of all users.
