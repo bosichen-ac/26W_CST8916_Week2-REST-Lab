@@ -1,3 +1,6 @@
+# AI Disclosure: Google Gemini was used to explain some one-line code and debug
+
+
 # Import necessary modules from Flask
 # Flask: the core framework for the web app
 # jsonify: to convert Python dictionaries to JSON responses

@@ -1,23 +1,27 @@
 # GET all tasks	200 with tasks array
-GET http://localhost:8000/tasks
+# GET http://localhost:8000/tasks
+GET https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks
 Accept: application/json
 
 ###
 
 # GET a single task	200 with task object
-GET http://localhost:8000/tasks/1
+# GET http://localhost:8000/tasks/1
+GET https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks/1
 Accept: application/json
 
 ###
 
 # GET a task that doesn't exist	404
-GET http://localhost:8000/tasks/1000
+# GET http://localhost:8000/tasks/1000
+GET https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks/1000
 Accept: text/plain
 
 ###
 
 # POST a new task (valid data)	201 with created task
-POST http://localhost:8000/tasks
+# POST http://localhost:8000/tasks
+POST https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks
 Content-Type: application/json
 
 {
@@ -30,7 +34,8 @@ Content-Type: application/json
 ###
 
 # POST a task with missing title	400
-POST http://localhost:8000/tasks
+# POST http://localhost:8000/tasks
+POST https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks
 Content-Type: application/json
 
 {
@@ -42,7 +47,8 @@ Content-Type: application/json
 ###
 
 # POST a task with invalid user_id	400
-POST http://localhost:8000/tasks
+# POST http://localhost:8000/tasks
+POST https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks
 Content-Type: application/json
 
 {
@@ -55,7 +61,8 @@ Content-Type: application/json
 ###
 
 # PUT to update a task	200 with updated task
-PUT http://localhost:8000/tasks/1
+# PUT http://localhost:8000/tasks/1
+PUT https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks/1
 Accept: application/json
 Content-Type: application/json
 
@@ -70,11 +77,13 @@ Content-Type: application/json
 ###
 
 # DELETE a task	204
-DELETE http://localhost:8000/tasks/1
+# DELETE http://localhost:8000/tasks/1
+DELETE https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/tasks/1
 Accept: text/plain
 
 ###
 
 # GET tasks for a specific user	200 with user's tasks
-GET http://localhost:8000/users/1/tasks
+# GET http://localhost:8000/users/1/tasks
+GET https://assignment-1-rest-bca2bbhfh9h5czhx.canadacentral-01.azurewebsites.net/users/1/tasks
 Accept: application/json
